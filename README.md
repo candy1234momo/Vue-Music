@@ -14,13 +14,13 @@ npm run dev
 # build for production with minification
 npm run build
 
-#vue-music中使用stylus
+# vue-music中使用stylus
 
-##安装stylus、stylus-loader插件
+## 安装stylus、stylus-loader插件
 
 npm install stylus stylus-loader --save
 
-##配置别名common
+## 配置别名common
 
 resolve: {
     extensions: ['.js', '.vue', '.json'],
@@ -31,7 +31,7 @@ resolve: {
     }
 }
 
-##复制src文件执行 npm run dev
+## 复制src文件执行 npm run dev
 
 
 # build for production and view the bundle analyzer report
