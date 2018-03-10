@@ -44,18 +44,22 @@ resolve: {
     }
 }
 
-## 复制src文件执行 npm run dev
-```
 
-> 第二章节 
+## 复制src文件执行 npm run dev
+````
+
+> 第二章节 组件引入及路由的使用
 ```
 ## 运行babel-runtime fastclick插件
-babel-runtime:ES6的转译
+
+备注： babel-runtime:ES6的转译
+
 fastclick:减轻移动端3s延时问题
 
 npm install babel-runtime fastclick --save
 
 ## 开发babel-polyfill插件
+
 babel-polyfill:api ES6 promise转译
 
 npm install babel-polyfill --save -dev
@@ -63,7 +67,7 @@ npm install babel-polyfill --save -dev
 ## /components中放入使用的页面
 
 ## 页面组件使用 Tab Mheader
-```
+
 <template>
   <div id="app" @touchmove.prevent>
     <m-header></m-header>
@@ -85,7 +89,7 @@ npm install babel-polyfill --save -dev
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 </style>
-```
+
 
 
 ## vue-router使用
@@ -95,7 +99,7 @@ npm install babel-polyfill --save -dev
 
 ##router/index.js
 
-```
+
 import Vue from 'vue'
 import Router from 'vue-router'
 import Rank from '@/components/rank/rank'
@@ -126,11 +130,10 @@ export default new Router({
     }
   ]
 })
-```
+
 2./src/main.js中引入router/index.js文件
 import router from './router'
 
-```
 import 'babel-polyfill'
 import Vue from 'vue'
 import App from './App'
@@ -146,13 +149,12 @@ new Vue({
   router,
   render: h => h(App)
 })
-```
+
 3./src/app.vue中显示router界面
 
-````
 <router-vue></router-vue>
 
-```
+
 
 知识点：
 
