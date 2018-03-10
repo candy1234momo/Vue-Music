@@ -1,13 +1,11 @@
 <template>
   <div id="app">
-    hello
+    hello world
   </div>
 </template>
 
-<script>
-export default {
-  name: 'App'
-}
+<script type="text/ecmascript-6">
+
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
