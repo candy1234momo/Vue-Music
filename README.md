@@ -1,6 +1,6 @@
-# test
+# vue-music
 
-> test
+> vue-music
 
 ## Build Setup
 
@@ -14,16 +14,36 @@ npm run dev
 # build for production with minification
 npm run build
 
+#vue-music中使用stylus
+
+##安装stylus、stylus-loader插件
+
+npm install stylus stylus-loader --save
+
+##配置别名common
+
+resolve: {
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js',
+      '@': resolve('src'),
+      'common': resolve('src/common')
+    }
+}
+
+##复制src文件执行 npm run dev
+
+
 # build for production and view the bundle analyzer report
 npm run build --report
 
-# run unit tests
+# run unit vue-music
 npm run unit
 
-# run e2e tests
+# run e2e vue-music
 npm run e2e
 
-# run all tests
+# run all vue-music
 npm test
 ```
 
