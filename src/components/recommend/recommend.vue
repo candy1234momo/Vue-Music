@@ -35,7 +35,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import {getRecommend,getDiscList} from 'api/recommend'
+import {getRecommend,getRecommends,getDiscList} from 'api/recommend'
 import {ERR_OK} from 'api/config'
 import Slider from 'base/slider/slider'
 import Scroll from 'base/scroll/scroll'
@@ -49,8 +49,8 @@ export default{
 		}
 	},
 	created(){
-		this._getRecommend()
-		//setTimeout(()=>{this._getDiscList()},2000)
+		//this._getRecommend()
+    this._getRecommends()
 		this._getDiscList()
 	},
 	components:{
@@ -66,6 +66,13 @@ export default{
 				}
 			})
 		},
+    _getRecommends(){
+      getRecommends().then((res)=>{
+        if(res.code === ERR_OK){
+          this.recommends=res.data.slider
+        }
+      })
+    },
 		_getDiscList() {
 	        getDiscList().then((res) => {
 	          if (res.code === ERR_OK) {
@@ -75,6 +82,16 @@ export default{
 	    },
 	    loadImage(){
 	    	if(!this.checkLoaded){
+          /**
+
+          ④子组件索引 简单来说：就是可以直接从索引获取到子组件，然后就可以调用各个子组件的方法了。
+          添加索引方法是：在标签里添加v-ref:索引名
+
+          调用组件方法是：vm.$ref.索引名
+
+          也可以直接在父组件中使用this.$ref.索引名
+
+          这个时候，就可以获得组件了，然后通过组件可以调用他的方法，或者是使用其数据。*/
 	    		this.$refs.scroll.refresh()
 	    		this.checkLoaded = true
 	    	}

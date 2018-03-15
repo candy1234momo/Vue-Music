@@ -295,8 +295,116 @@ export default{
 ```
 由此就可以回去到数据
 
+说道这里，估计大家应该都会想到之前访问轮播组建数据是我们安装啦jsonp并对其进行promise封装。现在我们使用axios完全可以解决跨域问题，而且非常简单不需要之前那么复杂，下面就来给大家展示下吧
+
+build/webpack.dev.conf.js
+```
+app.get('/api/getRecommend', function (req, res) {
+        const url = 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg'
+        axios.get(url, {
+          params: req.query
+        }).then((response) => {
+          res.json(response.data)
+        }).catch((e) => {
+          console.log(e)
+        })
+      })
+```
 
 
+src/api/recommend.js
+```
+//1.1.访问轮播图数据jsonp+promise封装
+export function getRecommend() {
+  const url = 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg'
+
+  const data = Object.assign({}, commonParams, {
+    platform: 'h5',
+    uin: 0,
+    needNewCode: 1
+  })
+
+  return jsonp(url, data, options)
+}
+//1.2.访问轮播图数据axios直接访问
+export function getRecommends() {
+  const url = '/api/getRecommend'
+
+  const data = Object.assign({}, commonParams, {
+    platform: 'h5',
+    uin: 0,
+    needNewCode: 1
+  })
+
+  return axios.get(url, {
+    params: data
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+```
+
+src/componentd/remmend/recommend.vue
+执行该方法即可
+```
+    _getRecommends(){
+      getRecommends().then((res)=>{
+        if(res.code === ERR_OK){
+          this.recommends=res.data.slider
+        }
+      })
+    }
+```
+
+
+
+
+
+#扩展知识$ref
+④子组件索引
+
+简单来说：就是可以直接从索引获取到子组件，然后就可以调用各个子组件的方法了。
+
+ 
+
+添加索引方法是：在标签里添加v-ref:索引名
+
+调用组件方法是：vm.$ref.索引名
+
+也可以直接在父组件中使用this.$ref.索引名
+
+这个时候，就可以获得组件了，然后通过组件可以调用他的方法，或者是使用其数据。
+```
+<div id="app">  
+    父组件：  
+    <button @click="todo">触发子组件的事件</button>  
+    <br/>  
+    子组件1：  
+    <!--绑定写在这里，可以多个绑定同一个，或者不同绑定不同的，但不能一个绑定多个-->  
+    <children v-ref:child></children>  
+</div>  
+<script>  
+    var vm = new Vue({  
+        el: '#app',  
+        methods: {  
+            todo: function () {  
+                this.$refs.child.fromParent();  //通过索引调用子组件的fromParent方法  
+            }  
+        },  
+        components: {  
+            children: {    //这个无返回值，不会继续派发  
+                props: ['test'],  
+                template: "<button>children1</button>",  
+                methods: {  
+                    fromParent: function () {  
+                        console.log("happened fromParent by ref");  
+                    }  
+                }  
+            }  
+        }  
+    });  
+</script>  
+```
 
 
 

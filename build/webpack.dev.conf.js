@@ -44,6 +44,17 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           console.log(e)
         })
       })
+
+      app.get('/api/getRecommend', function (req, res) {
+        const url = 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg'
+        axios.get(url, {
+          params: req.query
+        }).then((response) => {
+          res.json(response.data)
+        }).catch((e) => {
+          console.log(e)
+        })
+      })
     },
     hot: true,
     contentBase: false, // since we use CopyWebpackPlugin.
