@@ -47,6 +47,18 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 
       app.get('/api/getRecommend', function (req, res) {
         const url = 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg'
+        5cc7e45679bb3c232ef9cdbed8152a7cb3044efe
+        axios.get(url, {
+          params: req.query
+        }).then((response) => {
+          res.json(response.data)
+        }).catch((e) => {
+          console.log(e)
+        })
+      })
+      
+      app.get('/api/getSingerList',(req, res)=>{
+        const url = 'https://c.y.qq.com/v8/fcg-bin/v8.fcg'
         axios.get(url, {
           params: req.query
         }).then((response) => {
