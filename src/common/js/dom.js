@@ -14,6 +14,7 @@ export function addClass(el, className) {
 }
 
 export function getData(el , name , val){
+  console.log(el);
      const prefix = 'data-'
      name = prefix + name
      if(val){
