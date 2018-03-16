@@ -11,6 +11,13 @@
 				</ul>
 			</li>
 		</ul>
+		<div>
+			<ul class="list-shortcut">
+				<li v-for="(item,index) in shortcutList" class="item" :data-index="index">
+					{{item}}
+				</li>
+			</ul>
+		</div>
 	</scroll>
 </template>
 <script type="text/javascript">
@@ -20,6 +27,13 @@ import Scroll from 'base/scroll/scroll'
 			data:{
 				type:Array,
 				default:[]
+			}
+		},
+		computed:{
+			shortcutList(){
+				return this.data.map((group)=>{
+					return group.title.substr(0,1)
+				})
 			}
 		},
 		components:{

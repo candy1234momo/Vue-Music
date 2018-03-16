@@ -347,13 +347,13 @@ export function getRecommends() {
 src/componentd/remmend/recommend.vue
 执行该方法即可
 ```
-    _getRecommends(){
-      getRecommends().then((res)=>{
-        if(res.code === ERR_OK){
-          this.recommends=res.data.slider
-        }
-      })
+_getRecommends(){
+  getRecommends().then((res)=>{
+    if(res.code === ERR_OK){
+      this.recommends=res.data.slider
     }
+  })
+}
 ```
 
 
@@ -406,7 +406,83 @@ src/componentd/remmend/recommend.vue
 </script>  
 ```
 
+```
+// 为了得到有序列表，我们需要处理 map
+  let ret = []
+  let hot = []
+  for (let key in map) {
+    let val = map[key]
+    if (val.title.match(/[a-zA-Z]/)) {
+      ret.push(val)
+    } else if (val.title === HOT_NAME) {
+      hot.push(val)
+    }
+  }
+  ret.sort((a, b) => {
+    return a.title.charCodeAt(0) - b.title.charCodeAt(0)
+  })
+  return hot.concat(ret)
 
+sort那个function的作用就是比较两个数的大小用的,然后返回结果的正负作为排序的依据.
+这个函数是升序排序,如果想逆序排序改成return b-a;就行了.
+它的排序原理是每2个数比较,然后根据正负更改数组内元素的位置.
+比如第一次比较,a就是888,b就是2222然后返回888-2222 是负的 位置不变.
+你可以在函数里面alert一下a和b的值看看.
+
+
+charCodeAt() 方法可返回指定位置的字符的 Unicode 编码。这个返回值是 0 - 65535 之间的整数。
+方法 charCodeAt() 与 charAt() 方法执行的操作相似，只不过前者返回的是位于指定位置的字符的编码，而后者返回的是字符子串。
+
+match() 方法可在字符串内检索指定的值，或找到一个或多个正则表达式的匹配。
+该方法类似 indexOf() 和 lastIndexOf()，但是它返回指定的值，而不是字符串的位置。
+
+```
+
+
+```
+$(':checkbox').map(function() {
+  return this.id;
+}).get().join(',');
+
+map() 把每个元素通过函数传递到当前匹配集合中，生成包含返回值的新的 jQuery 对象。
+
+
+$(selector).get(index)
+get() 方法获得由选择器指定的 DOM 元素。
+
+
+var arr = new Array(3)
+arr[0] = "George"
+arr[1] = "John"
+arr[2] = "Thomas"
+
+document.write(arr.join()) //George,John,Thomas
+document.write(arr.join(".")) //George.John.Thomas
+join() 方法用于把数组中的所有元素放入一个字符串。
+元素是通过指定的分隔符进行分隔的。
+
+```
+
+```
+target 事件属性可返回事件的目标节点（触发该事件的节点），如生成事件的元素、文档或窗口。
+
+
+<p id="p1"></p>
+
+console.log(event.target.id); //p1
+console.log(event.target.getAttribute(id)); //p1  当id是一个变量值时
+
+
+export function getData(el , name , val){
+     const prefix = 'data-'
+     name = prefix + name
+     if(val){
+      return el.setAttribute(name,val)
+     }else{
+      return el.getAttribute(name)
+     }
+}
+```
 
 
 
