@@ -29,13 +29,23 @@
 				</li>
 			</ul>
 		</div>
+    <div class="list-fixed" ref="fixed" v-show="fixedTitle">
+      <div class="fixed-title">{{fixedTitle}}</div>
+    </div>
+
+    <div v-show="!data.length" class="loading-container">
+      <loading></loading>
+    </div>
+    
 	</scroll>
 </template>
 <script type="text/javascript">
 import Scroll from 'base/scroll/scroll'
 import {getData} from 'common/js/dom'
+import Loading from 'base/loading/loading'
 
 const ANCHOR_HEIGHT = 18
+const TITLE_HEIGHT = 30
 
 	export default {
 		props:{
@@ -49,7 +59,10 @@ const ANCHOR_HEIGHT = 18
 				return this.data.map((group)=>{
 					return group.title.substr(0,1)
 				})
-			}
+			},
+      fixedTitle(){
+        return this.currentIndex!==0?this.data[this.currentIndex].title:''
+      }
 		},
     data(){
       return{
@@ -120,6 +133,7 @@ const ANCHOR_HEIGHT = 18
         },20)
       },
       scrollY(newY){
+
         const listHeight=this.listHeight
         //当滚动到顶部，newY>0
         if(newY>0){
@@ -131,16 +145,26 @@ const ANCHOR_HEIGHT = 18
           let height1=listHeight[i]
           let height2=listHeight[i+1]
           if(-newY>=height1&&-newY<height2){
-            this.currentIndex=i            
+            this.currentIndex=i  
+            this.diff=height2+newY       
             return
           }         
         }
         //当滚动到底部，切-NewY大于最后一个元素上限
         this.currentIndex=listHeight.length - 2        
+      },
+      diff(newVal){
+        let fixedTop=(newVal>0&&newVal<TITLE_HEIGHT) ? newVal-TITLE_HEIGHT:0
+        if(this.fixedTop===fixedTop){
+          return
+        }
+        this.fixedTop = fixedTop
+        this.$refs.fixed.style.transform = `translate3d(0,${fixedTop}px,0)`
       }
     },
 		components:{
-			Scroll
+			Scroll,
+      Loading
 		}
 	}
 </script>
