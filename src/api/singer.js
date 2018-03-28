@@ -17,3 +17,22 @@ export function getSingerList(){
 		return Promise.resolve(res.data)
 	})
 }
+export function getSingerDetail(singerId){
+
+	const data = Object.assign({}, commonParams,{
+        hostUin:0,
+        needNewCode:0,
+        platform:'yqq',
+        order:'listen',
+        begin:0,
+        num:80,
+        songstatus:1,
+        singermid:singerId
+	})
+
+	return axios.get('/api/getSingerDetail',{
+		params:data
+	}).then((res)=>{
+		return Promise.resolve(res.data)
+	})
+}
